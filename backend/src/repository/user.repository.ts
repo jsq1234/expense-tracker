@@ -18,8 +18,11 @@ export class UserRepository {
         return userId[0].id;
     }
 
-    static async findById(userId: string): Promise<User> {
+    static async findById(userId: string): Promise<User | null> {
         const user = await sql<User[]>`SELECT * FROM users WHERE id = ${userId}`;
+        if(user.length === 0){
+            return null;
+        }
         return user[0];
     }
 
@@ -33,5 +36,21 @@ export class UserRepository {
 
     static async updatePassword(userId: string, password: { passwordHash: string }) {
         await sql`UPDATE users SET ${sql(password, ['passwordHash'])} WHERE id = ${userId}`;
+    }
+
+    static async findByEmail(email: string): Promise<User | null>{
+        const user = await sql<User[]>`SELECT * FROM users WHERE email = ${email}`;
+        if(user.length === 0){
+            return null
+        }
+        return user[0];
+    }
+
+    static async findByUsername(username: string): Promise<User | null>{
+        const user = await sql<User[]>`SELECT * FROM users WHERE username = ${username}`;
+        if(user.length === 0){
+            return null
+        }
+        return user[0];
     }
 }

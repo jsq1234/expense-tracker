@@ -1,5 +1,7 @@
+import { UserDto } from "@/dto/user-dto";
+
 export class User {
-    userId: string;
+    id: string;
     email: string;
     username: string | null;
     firstName: string;
@@ -7,14 +9,14 @@ export class User {
     passwordHash: string;
 
     constructor(
-        userId: string,
+        id: string,
         email: string,
         firstName: string,
         lastName: string,
         username: string | null = null,
         passwordHash: string
     ) {
-        this.userId = userId;
+        this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -24,5 +26,15 @@ export class User {
 
     get fullName() {
         return `${this.firstName} ${this.lastName}`;
+    }
+
+    getDto(): UserDto {
+        return {
+            email: this.email,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            id: this.id,
+            username: this.username
+        };
     }
 }

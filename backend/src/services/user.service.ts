@@ -1,11 +1,10 @@
-import { UserRepository } from "@/repository/user-repository";
+import { UserRepository } from "@/repository/user.repository";
 import { IUser, IUserUpdateColumns } from "@/utils/interface";
 import * as bcrypt from 'bcrypt';
 import { PostgresError } from "postgres";
-import { PostgresError as PgError } from "pg-error-enum";
+import { PostgresError as PgError } from 'pg-error-enum';
 import { ApiError, genericCatchHandler } from "@/utils/errors";
 import { HttpStatus } from "@/utils/http-status";
-import { UserDto } from "@/dto/user-dto";
 
 export class UserService {
     static async createUser(user: IUser) {
@@ -52,6 +51,9 @@ export class UserService {
     static async changePassword(userId: string, currentPassword: string, newPassword: string) {
         try {
             const user = await UserRepository.findById(userId);
+            if(user === null){
+                throw new ApiError(HttpStatus.UNAUTHORIZED);
+            }
             const isSame = await bcrypt.compare(currentPassword, user.passwordHash);
             if (isSame) {
                 const passwordHash = await bcrypt.hash(newPassword, 10);
@@ -64,10 +66,28 @@ export class UserService {
         }
     }
 
+    static async comparePassword(givenPassword: string, correctPassword: string){
+        try{
+            return await bcrypt.compare(givenPassword, correctPassword);
+        }catch(e: any){
+            genericCatchHandler(e);
+        }
+    }
+
     static async fetchUser(userId: string){
         try{
             const user = await UserRepository.findById(userId);
-            return user as UserDto;
+            return user;
+        }catch(e: any){
+            genericCatchHandler(e);
+            return null;
+        }
+    }
+
+    static async fetchUserByEmail(email: string){
+        try{
+            const user = await UserRepository.findByEmail(email);
+            return user;
         }catch(e: any){
             genericCatchHandler(e);
         }

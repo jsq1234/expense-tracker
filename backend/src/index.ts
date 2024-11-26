@@ -1,14 +1,21 @@
-import { UserService } from "./services/user-service";
+import { PaymentMethod, TransactionType } from "./models/financial-records.model";
+import { FinancialRecordsService } from "./services/financial-records.service";
+import { UserService } from "./services/user.service";
 import { initDatabase } from "./utils/init-db";
 
-initDatabase().then(() => {
-  console.log("Successfully created tables!");
-
-  return UserService.createUser({
-    email: "manaprakash3078@gmail.com",
+initDatabase().then(async () => {
+  console.log("Successfully initialized database!");
+  const userId = await UserService.createUser({
+    email: "manan.prakash@tuningbill.com",
     firstName: "Manan",
-    lastName: "Prakash",
-    username: "some-radom-ass-username",
-    password: "Qwerty@12345"
+    lastName: "Singh",
+    password: "Qwerty@12345",
+    username: "pogger_champ1234"
   });
-}).then(id => console.log("new id: ", id));
+  console.log(userId);
+  if(userId){
+    const user = await UserService.fetchUser(userId);
+    console.log("User: ");
+    console.log(user);
+  }
+});
