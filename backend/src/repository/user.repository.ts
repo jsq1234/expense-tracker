@@ -1,6 +1,6 @@
 import sql from "@/config/db.config";
 import { User } from "@/models/user.model";
-import { IUser, IUserUpdateColumns } from "@/utils/interface";
+import { IUser, IUserUpdateColumns } from "@/utils/types";
 
 export class UserRepository {
     static async createNewUser(user: IUser): Promise<string>{

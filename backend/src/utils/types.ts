@@ -3,8 +3,8 @@ import {
   TransactionType,
 } from "@/models/financial-records.model";
 
-export interface IUser {
-  userId?: string;
+export type User = {
+  id?: string;
   username: string | null;
   email: string;
   firstName: string;
@@ -12,14 +12,9 @@ export interface IUser {
   password: string;
 }
 
-export interface IUserUpdateColumns {
-  username: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-}
+export type UpdateUserColumns = Omit<User, 'id'>;
 
-export interface IFinancialRecord {
+export type FinancialRecord = {
   userId: string;
   type: number;
   amount: number;
@@ -29,7 +24,7 @@ export interface IFinancialRecord {
   description?: string;
 }
 
-export interface JwtConfig {
+export type JwtConfig = {
   secret: string;
   expiresIn: string;
 }

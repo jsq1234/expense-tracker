@@ -1,5 +1,5 @@
 import { User } from "@/models/user.model";
-import { JwtConfig } from "@/utils/interface";
+import { JwtConfig } from "@/utils/types";
 import jwt from "jsonwebtoken";
 
 export class UserService {

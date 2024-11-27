@@ -1,6 +1,6 @@
 import { FinancialRecord, PaymentMethod } from "@/models/financial-records.model";
 import { FinancialRecordsRepository } from "@/repository/financial-records.repository";
-import { IFinancialRecord } from "@/utils/interface";
+import { IFinancialRecord } from "@/utils/types";
 
 export class FinancialRecordsService{
     static async createRecord(record: IFinancialRecord){

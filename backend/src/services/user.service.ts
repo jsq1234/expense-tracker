@@ -1,5 +1,5 @@
 import { UserRepository } from "@/repository/user.repository";
-import { IUser, IUserUpdateColumns } from "@/utils/interface";
+import { IUser, IUserUpdateColumns } from "@/utils/types";
 import * as bcrypt from 'bcrypt';
 import { PostgresError } from "postgres";
 import { PostgresError as PgError } from 'pg-error-enum';
