@@ -39,14 +39,14 @@ export enum SubCategory{
 
 export class FinancialRecord {
     id?: number; // Optional, since it's auto-generated
-    user_id!: string; // UUID type in PostgreSQL
+    userId!: string; // UUID type in PostgreSQL
     type!: number;
     amount!: number;
     transactionType!: TransactionType;
     transactionDate?: Date; // Optional, default is CURRENT_DATE
     paymentMethod!: PaymentMethod;
     description?: string; // Optional
-    created_at?: Date; // Optional, default is CURRENT_TIMESTAMP
+    createdAt?: Date; // Optional, default is CURRENT_TIMESTAMP
 
     constructor(init?: Partial<FinancialRecord>) {
         Object.assign(this, init);

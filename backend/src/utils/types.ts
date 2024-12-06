@@ -1,30 +1,34 @@
-import {
-  PaymentMethod,
-  TransactionType,
-} from "@/models/financial-records.model";
 
-export type User = {
-  id?: string;
-  username: string | null;
-  email: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-}
+import { z } from "zod";
+import { createFinancialRecordSchema, createUserSchema, updateUserSchema } from "./validation";
+import { UserEntity } from "@/models/user.model";
 
-export type UpdateUserColumns = Omit<User, 'id'>;
+export type CreateUser = z.infer<typeof createUserSchema>;
+export type UpdateUser = z.infer<typeof updateUserSchema>;
+export type CreateFinancialRecord = z.infer<typeof createFinancialRecordSchema>;
 
-export type FinancialRecord = {
-  userId: string;
-  type: number;
-  amount: number;
-  transactionType: TransactionType;
-  paymentMethod: PaymentMethod;
-  transactionDate?: Date;
-  description?: string;
-}
+
+export type UserDto = Omit<UserEntity, 'password' | 'fullName' | 'getDto'>;
 
 export type JwtConfig = {
   secret: string;
   expiresIn: string;
 }
+
+export type FieldError = {
+  field: string;
+  message: string;
+}
+
+export type CommonResponse<T> = {
+  data: T | null;
+  status: 'SUCCESS' | 'FAILURE';
+  errors: string | null;
+}
+
+
+type Nullable<T> = {
+  [K in keyof T]: T[K] | null
+};
+
+export type MakeNullable<T,K extends keyof T> = Omit<T, K> & Nullable<Pick<T, K>>

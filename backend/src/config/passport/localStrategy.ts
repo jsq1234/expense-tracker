@@ -12,7 +12,7 @@ export const localStrategy = new LocalStrategy({
             return done(null, false, { message: 'Incorrect username' });
         }
 
-        const isMatch = await UserService.comparePassword(password, user.passwordHash);
+        const isMatch = await UserService.comparePassword(password, user.password);
 
         if (!isMatch) {
             return done(null, false, { message: 'Incorrect password' });

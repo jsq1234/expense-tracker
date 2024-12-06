@@ -35,13 +35,15 @@ export class ApiError extends Error {
 }
 
 
-export function genericCatchHandler(e:any, conditions: (() => void) | undefined = undefined){
-  console.error(e);
+export async function genericCatchHandler(e:any, conditions: (() => void) | (() => Promise<void>) | undefined = undefined): Promise<never> {
   if(e instanceof ApiError){
       throw e;
   }
   if(conditions){
-    conditions();
+    const result = conditions();
+    if(result instanceof Promise){
+      await result;
+    }
   }
   throw new ApiError(HttpStatus.INTERNAL_SERVER_ERROR);
 }

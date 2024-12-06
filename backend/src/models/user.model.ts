@@ -1,27 +1,16 @@
-import { UserDto } from "@/dto/user-dto";
+import {  UserDto } from "@/utils/types";
 
-export class User {
-    id: string;
-    email: string;
-    username: string | null;
-    firstName: string;
-    lastName: string;
-    passwordHash: string;
+export class UserEntity {
+    id!: string;
+    email!: string;
+    username!: string;
+    firstName!: string;
+    lastName!: string;
+    password!: string;
 
-    constructor(
-        id: string,
-        email: string,
-        firstName: string,
-        lastName: string,
-        username: string | null = null,
-        passwordHash: string
-    ) {
-        this.id = id;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.passwordHash = passwordHash;
+
+    constructor(user: Partial<UserEntity>){
+        Object.assign(this, user);
     }
 
     get fullName() {
@@ -30,10 +19,10 @@ export class User {
 
     getDto(): UserDto {
         return {
+            id: this.id,
             email: this.email,
             firstName: this.firstName,
             lastName: this.lastName,
-            id: this.id,
             username: this.username
         };
     }
