@@ -20,10 +20,10 @@ export type FieldError = {
   message: string;
 }
 
-export type CommonResponse<T> = {
+export type CommonResponse<T, U = any[]> = {
   data: T | null;
   status: 'SUCCESS' | 'FAILURE';
-  errors: string | null;
+  errors: U | null;
 }
 
 

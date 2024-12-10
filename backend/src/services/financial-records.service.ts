@@ -8,7 +8,7 @@ import { CreateFinancialRecord } from "@/utils/types";
 
 export class FinancialRecordsService {
   static async createRecord(financialRecord: CreateFinancialRecord) {
-    return await FinancialRecordsRepository.createRecord(recordEntity);
+    return await FinancialRecordsRepository.createRecord(financialRecord);
   }
 
   static async findByUserId(userId: string) {}

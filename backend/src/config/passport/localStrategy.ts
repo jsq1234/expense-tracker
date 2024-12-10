@@ -17,7 +17,7 @@ export const localStrategy = new LocalStrategy({
         if (!isMatch) {
             return done(null, false, { message: 'Incorrect password' });
         }
-          
+        
         return done(null, user);
     }catch(e: any){
         return done(e);

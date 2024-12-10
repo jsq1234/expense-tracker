@@ -2,6 +2,9 @@ import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 import { config } from "dotenv";
 import { JwtPayload } from "jsonwebtoken";
 import { UserService } from "@/services/user.service";
+import { ApiError } from "@/utils/errors";
+import { HttpStatus } from "@/utils/http-status";
+import { ZodError, ZodIssueCode } from "zod";
 config();
 
 const { JWT_SECRET } = process.env;
@@ -18,11 +21,10 @@ export const jwtStrategy = new JwtStrategy({
         if(!payload.sub){
             return done(null, false);
         }
-
         const user = await UserService.fetchUser(payload.sub);
 
         if(!user){
-            return done(null, false);
+            return done(null, false, { message: "User not found" });
         }
         return done(null, user);
     }catch(e: any){
